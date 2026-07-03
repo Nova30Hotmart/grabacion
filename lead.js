@@ -59,7 +59,7 @@ export default async function handler(req, res) {
     // CUENTA DEL LISTADO — solo tenemos el nombre, sin correo.
     // Se registra usando un identificador externo (ext_id) hecho con el nombre.
     body = {
-      ext_id: slug(cuenta),
+      //ext_id: slug(cuenta),
       attributes: {
         ORIGEN: "cuenta",
         CUENTA: cuenta,
@@ -71,7 +71,7 @@ export default async function handler(req, res) {
       // ── Si tu cuenta de Brevo NO permite contactos sin correo, borra la
       //    línea "ext_id" de arriba y descomenta esta, que genera un correo
       //    técnico con tu propio dominio (nunca llega a una persona real):
-      // email: `${slug(cuenta)}@cuenta.hotmartcomunidades.com`,
+       email: `${slug(cuenta)}@cuenta.hotmartcomunidades.com`,
     };
   } else {
     return res.status(400).json({ ok: false, error: "Sin datos" });
