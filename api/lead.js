@@ -21,7 +21,7 @@ const BREVO_URL = "https://api.brevo.com/v3/contacts";
 const LIST_PROSPECTOS = Number(process.env.BREVO_LIST_PROSPECTOS || 0); // los que dejan correo
 const LIST_ASISTENTES = Number(process.env.BREVO_LIST_ASISTENTES || 0); // cuentas del listado
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS (por si la página vive en un subdominio distinto al de la función)
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -66,12 +66,12 @@ export default async function handler(req, res) {
         EVENTO: evento || ""
       },
       updateEnabled: true,
-      ...(LIST_ASISTENTES ? { listIds: [LIST_ASISTENTES] } : {})
+      ...(LIST_ASISTENTES ? { listIds: [LIST_ASISTENTES] } : {}),
 
       // ── Si tu cuenta de Brevo NO permite contactos sin correo, borra la
       //    línea "ext_id" de arriba y descomenta esta, que genera un correo
       //    técnico con tu propio dominio (nunca llega a una persona real):
-       email: `${slug(cuenta)}@cuenta.hotmartcomunidades.com`,
+      email: `${slug(cuenta)}@cuenta.hotmartcomunidades.com`
     };
   } else {
     return res.status(400).json({ ok: false, error: "Sin datos" });
